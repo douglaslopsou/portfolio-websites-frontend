@@ -11,27 +11,25 @@ import {
   Information,
 } from './styles';
 
-interface WebsiteCardProps {
+interface Website {
+  id?: string;
   customer?: string;
   plan?: string;
   sector?: string;
-  websiteAddress?: string;
+  website_address?: string;
   thumbnail?: string;
-  amountPaid?: string;
+  amount_paid?: string;
   salesman?: string;
-  publishDate: string | undefined;
+  publish_date?: string;
+}
+
+interface WebsiteCardProps {
+  website: Website;
   className?: string;
 }
 
 const WebsiteCard: React.FC<WebsiteCardProps> = ({
-  customer,
-  plan,
-  sector,
-  websiteAddress,
-  thumbnail,
-  amountPaid,
-  salesman,
-  publishDate,
+  website,
   className = '',
   children,
 }) => {
@@ -41,34 +39,39 @@ const WebsiteCard: React.FC<WebsiteCardProps> = ({
     return formattedDate;
   }
   */
+
   return (
     <Container className={className}>
       {children}
-      <a href={websiteAddress} target="_blank" rel="noopener noreferrer">
-        <Plan>{plan}</Plan>
-        <img src={thumbnail} alt="Thumbnail Site" />
+      <a
+        href={website.website_address}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Plan>{website.plan}</Plan>
+        <img src={website.thumbnail} alt="Thumbnail Site" />
 
         <Details>
-          <Title>{customer}</Title>
+          <Title>{website.customer}</Title>
 
           <SubTitleContainer>
             <SubTitle>Nicho: </SubTitle>
-            <Information>{sector}</Information>
+            <Information>{website.sector}</Information>
           </SubTitleContainer>
 
           <SubTitleContainer>
             <SubTitle>Vendedor: </SubTitle>
-            <Information>{salesman}</Information>
+            <Information>{website.salesman}</Information>
           </SubTitleContainer>
 
           <SubTitleContainer>
             <SubTitle>Valor: </SubTitle>
-            <Information>{amountPaid}</Information>
+            <Information>{website.amount_paid}</Information>
           </SubTitleContainer>
 
           <SubTitleContainer>
             <SubTitle>Data da Publicação: </SubTitle>
-            <Information>{publishDate}</Information>
+            <Information>{website.publish_date}</Information>
           </SubTitleContainer>
         </Details>
       </a>

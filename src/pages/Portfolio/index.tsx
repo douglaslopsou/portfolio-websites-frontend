@@ -1,40 +1,28 @@
-import React, {
-  useCallback,
-  useRef,
-  Component,
-  useState,
-  useEffect,
-} from 'react';
-import Select from 'react-select';
-import { FormHandles } from '@unform/core';
+import React, { useState, useEffect } from 'react';
+// import Select from 'react-select';
+// import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
-import * as Yup from 'yup';
+// import * as Yup from 'yup';
 import { FiSearch } from 'react-icons/fi';
 import { VscListSelection } from 'react-icons/vsc';
 import logoImg from '../../assets/logo.svg';
-import thumbnailImg from '../../assets/thumbnail.jpg';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
-import WebsiteCard from '../../components/WebsiteCard';
+import WebsitesGallery from '../../components/WebsitesGallery';
 import api from '../../services/api';
 
-import {
-  Container,
-  Content,
-  AnimationContainer,
-  ContainerCards,
-} from './styles';
+import { Container, Content, AnimationContainer } from './styles';
 
-const options = [
-  { value: 'landingpage', label: 'Landing Page' },
-  { value: 'prime', label: 'Prime' },
-  { value: 'personalizado', label: 'Personalizado' },
-];
+// const options = [
+//   { value: 'landingpage', label: 'Landing Page' },
+//   { value: 'prime', label: 'Prime' },
+//   { value: 'personalizado', label: 'Personalizado' },
+// ];
 
-const customStyles = {};
+// const customStyles = {};
 
 interface Website {
-  id: string;
+  id?: string;
   customer?: string;
   plan?: string;
   sector?: string;
@@ -46,13 +34,15 @@ interface Website {
 }
 
 const Portfolio: React.FC = () => {
-  const [websites, setWebsites] = useState<Website[]>([]);
+  const [websites, setWebsites] = useState<Website[][]>([]);
 
   useEffect(() => {
-    api.get('websites').then((response) => {
+    api.get('websites/chunks').then((response) => {
       setWebsites(response.data);
     });
   }, []);
+
+  // console.log(websites);
 
   return (
     <>
@@ -71,14 +61,14 @@ const Portfolio: React.FC = () => {
             </h1>
             <Form onSubmit={() => {}}>
               <Input name="search" icon={FiSearch} placeholder="https://..." />
-              <div>
+              {/* <div>
                 <Select
                   name="plan"
                   IsMulti
                   options={options}
                   styles={customStyles}
                 />
-              </div>
+              </div> */}
               <Input
                 name="sector"
                 icon={VscListSelection}
@@ -88,26 +78,17 @@ const Portfolio: React.FC = () => {
             </Form>
           </AnimationContainer>
 
-          <ContainerCards>
-            {websites.map((website, index) => {
+          <AnimationContainer>
+            <WebsitesGallery websites={websites}>
+              {/* {websitesChunks.map((websitesChunk, index) => {
               return (
                 <>
-                  <WebsiteCard
-                    key={website.id}
-                    customer={website.customer}
-                    thumbnail={website.thumbnail}
-                    sector={website.sector}
-                    plan={website.plan}
-                    salesman={website.salesman}
-                    amountPaid={website.amount_paid}
-                    websiteAddress={website.website_address}
-                    publishDate={website.publish_date}
-                  />
-                  {index % 3 === 0 && index != 0 && <div></div>}
+                  <WebsiteCard key={index} websites={websitesChunk} />
                 </>
               );
-            })}
-          </ContainerCards>
+            })} */}
+            </WebsitesGallery>
+          </AnimationContainer>
         </Content>
       </Container>
     </>

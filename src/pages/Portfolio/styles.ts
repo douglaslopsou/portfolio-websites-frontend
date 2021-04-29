@@ -42,7 +42,6 @@ export const AnimationContainer = styled.div`
   }
 
   form {
-    width: 1440px;
     text-align: center;
     display: flex;
 
@@ -71,14 +70,6 @@ export const AnimationContainer = styled.div`
       color: ${shade(0.2, '#ff9000')};
     }
   }
-`;
-
-export const ContainerCards = styled.div`
-  display: flex;
-  flex-direction: row;
-
-  align-items: flex-start;
-  justify-content: space-between;
 `;
 
 export const Background = styled.div`
